@@ -1,0 +1,6 @@
+-Initialize git 
+- .gitignore
+- Create remote repo in github
+- Push all codes to remote origin.
+- Play with routes and route extensions ex- / , /test ,/test/123
+- Order of routes matters a lot.
