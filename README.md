@@ -4,3 +4,7 @@
 - Push all codes to remote origin.
 - Play with routes and route extensions ex- / , /test ,/test/123
 - Order of routes matters a lot.
+- Install Postman app and make workspace/collection > test api calls
+- write logic to test http method calls like GET, POST,PATCH, DELETE and test in postman
+- Reading the query params in Route.
+- Reading the dynamic routes.
