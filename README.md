@@ -8,3 +8,8 @@
 - write logic to test http method calls like GET, POST,PATCH, DELETE and test in postman
 - Reading the query params in Route.
 - Reading the dynamic routes.
+
+- Multiple Route Handlers 
+- next()
+- next function and errors with res.send()
+- app.use("/route" , r1 ,r2 ,[r3,r4]);
