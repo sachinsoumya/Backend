@@ -1,4 +1,5 @@
--Initialize git 
+-Initialize git
+
 - .gitignore
 - Create remote repo in github
 - Push all codes to remote origin.
@@ -9,7 +10,11 @@
 - Reading the query params in Route.
 - Reading the dynamic routes.
 
-- Multiple Route Handlers 
+- Multiple Route Handlers
 - next()
 - next function and errors with res.send()
 - app.use("/route" , r1 ,r2 ,[r3,r4]);
+- What is middlewares ? Why does we need middlewares.
+- How express.js basically handles requests behind the scenes.
+- Write a dummy auth middleware for admin .
+- Write a dummy auth middleware for all user routes , expect /user/login.

@@ -2,6 +2,13 @@ const express = require("express");
 
 const app = express();
 
+const { adminAuth, userAuth } = require("./middlewares/auth");
+
+console.log(adminAuth);
+
+app.use("/admin", adminAuth);
+//* app.use("/user" , userAuth);
+
 // app.use((rq, res) => {
 //   res.send("Hello form / route");
 // });
@@ -47,19 +54,41 @@ const app = express();
 //   res.send("user deleted successfully");
 // });
 
-app.use(
-  "/",
-  (req, res, next) => {
-    console.log("This is the request handler 1");
-    res.send("Hello from express 1");
+app.get("/", (req, res, next) => {
+  console.log("This is the request handler 1");
+  // res.send("Hello from express 1");
 
-    next();
-  },
-  (req, res) => {
-    console.log("This is the request handler 2");
-    res.send("Hello from express 2");
-  },
-);
+  next();
+});
+
+app.get("/", (req, res) => {
+  console.log("This is request handler 2");
+  res.send("Hello from express 3");
+});
+
+app.get("/admin/user", (req, res) => {
+  res.send("Welcome to the admin page");
+});
+
+app.delete("/admin/user", (req, res) => {
+  res.send("User deleted successfully");
+});
+
+app.get("/user", userAuth, (req, res) => {
+  res.json({
+    message: "User fetched successfully",
+    data: [
+      {
+        name: "John Doe",
+        age: 45,
+      },
+      {
+        name: "Jani Doe",
+        age: 67,
+      },
+    ],
+  });
+});
 
 app.listen(5555, (req, res) => {
   console.log("Server is running on port 5555");
