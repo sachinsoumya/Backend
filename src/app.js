@@ -8,68 +8,25 @@ const authRouter = require("./routes/auth");
 
 const connectDb = require("./config/database");
 
+const User = require("./model/user");
+
 console.log(connectDb);
-app.use("/", authRouter);
+// app.use("/", authRouter);
 
-console.log(adminAuth);
+app.post("/signup",  async (req, res) => {
+  const user = new User({
+    firstName: "Jane",
+    lastName: "Doeh",
+    email: "jane@gmail.com",
+    password: 1234567,
+    age: 76,
+    gender: "female",
+  });
 
-//* app.use("/user" , userAuth);
+  await user.save();
 
-// app.use((rq, res) => {
-//   res.send("Hello form / route");
-// });
-
-// app.use("/test", (req, res) => {
-//   console.log(res);
-
-//   res.send("Hello from express");
-// });
-
-// app.use("/test/123", (req, res) => {
-//   res.send("Hello from route /test/123");
-// });
-
-// app.use("/test2", (req, res) => {
-//   res.send("Hello from express 2");
-
-// });
-
-// app.use((rq, res) => {
-//   res.send("Hello form / route");
-// });
-
-// app.use("/test3", (req, res) => {
-//   res.send("Hello from express 3");
-// });
-
-// app.get("/user", (req, res) => {
-//   console.log(req.query);
-//   res.send("Getting the user fromm db");
-// });
-// app.get("/user/u1", (req, res) => {
-//   console.log(req.params);
-//   res.send("Getting 2 the user fromm db");
-// });
-
-// app.post("/user/:id/:name", (req, res) => {
-//     console.log(req.params);
-//   res.send("User created successfully");
-// });
-
-// app.delete("/user", (req, res) => {
-//   res.send("user deleted successfully");
-// });
-
-app.get("/", (req, res, next) => {
-  console.log("This is the request handler 1");
-  // res.send("Hello from express 1");
-
-  next();
-});
-
-app.get("/", (req, res) => {
-  console.log("This is request handler 2");
-  res.send("Hello from express 3");
+  // console.log(user);
+  res.send("User added successfully");
 });
 
 connectDb()
