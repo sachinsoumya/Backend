@@ -5,12 +5,13 @@ const app = express();
 const { adminAuth, userAuth } = require("./middlewares/auth");
 
 const authRouter = require("./routes/auth");
-app.use("/" , authRouter);
 
+const connectDb = require("./config/database");
+
+console.log(connectDb);
+app.use("/", authRouter);
 
 console.log(adminAuth);
-
-
 
 //* app.use("/user" , userAuth);
 
@@ -71,9 +72,16 @@ app.get("/", (req, res) => {
   res.send("Hello from express 3");
 });
 
-app.listen(5555, (req, res) => {
-  console.log("Server is running on port 5555");
-});
+connectDb()
+  .then(() => {
+    console.log("database connected successfully");
+    app.listen(5555, (req, res) => {
+      console.log("Server is running on port 5555");
+    });
+  })
+  .catch((err) => {
+    console.log("Database connection failed");
+  });
 
 // console.log(app);
 

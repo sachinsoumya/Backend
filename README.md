@@ -19,3 +19,7 @@
 - Write a dummy auth middleware for admin .
 - Write a dummy auth middleware for all user routes , expect /user/login.
 - Error handling using app.use("/", (err,req,res,next)=>{}) towards the end.
+- create a cluster in mongodb official website(mongo atlas)
+- Install mongoose library.
+- connect your application to the database.
+- call connectDb function and connect the database before starting the server on port 5555.
