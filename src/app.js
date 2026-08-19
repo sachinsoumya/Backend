@@ -13,20 +13,24 @@ const User = require("./model/user");
 console.log(connectDb);
 // app.use("/", authRouter);
 
-app.post("/signup",  async (req, res) => {
-  const user = new User({
-    firstName: "Jane",
-    lastName: "Doeh",
-    email: "jane@gmail.com",
-    password: 1234567,
-    age: 76,
-    gender: "female",
-  });
+app.post("/signup", async (req, res) => {
+  try {
+    const user = new User({
+      firstName: "Jane",
+      lastName: "Doeh",
+      email: "jane@gmail.com",
+      password: 1234567,
+      age: 76,
+      gender: "female",
+    });
 
-  await user.save();
+    await user.save();
 
-  // console.log(user);
-  res.send("User added successfully");
+    // console.log(user);
+    res.send("User added successfully");
+  } catch (err) {
+    res.send("Error in saving user"+ " "+ err.message);
+  }
 });
 
 connectDb()
