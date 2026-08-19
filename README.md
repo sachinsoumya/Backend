@@ -23,3 +23,4 @@
 - Install mongoose library.
 - connect your application to the database.
 - call connectDb function and connect the database before starting the server on port 5555.
+- Created userSchema and User model .
