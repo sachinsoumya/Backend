@@ -31,3 +31,8 @@
 - APT- Delete the user from db.
 - Differences between patch and put.
 - APT- Update the user in db.(findByIdAndUpdate(query , data , options))
+- Explore the schema type options from the documentations.
+- Add required , unique , maxLength , minLength , lowerCase , upperCase , max , min , trim , default
+- Add custom validator function for gender field.
+- Improve the DB Schema.
+
