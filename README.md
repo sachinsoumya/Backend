@@ -26,3 +26,5 @@
 - Created userSchema and User model .
 - Created /signup api to add data to database.
 - Push some documents using API calls.
+- Get all documents /users using mongoose query(find({}));
+- Get a specific document /user using mongoose query(find({emilId:req.body.emailId}));
