@@ -23,8 +23,11 @@
 - Install mongoose library.
 - connect your application to the database.
 - call connectDb function and connect the database before starting the server on port 5555.
-- Created userSchema and User model .
+- API- Created userSchema and User model .
 - Created /signup api to add data to database.
 - Push some documents using API calls.
-- Get all documents /users using mongoose query(find({}));
-- Get a specific document /user using mongoose query(find({emilId:req.body.emailId}));
+- API- Get all documents /users using mongoose query(find({}));
+- API- Get a specific document /user using mongoose query(find({emilId:req.body.emailId}));
+- APT- Delete the user from db.
+- Differences between patch and put.
+- APT- Update the user in db.(findByIdAndUpdate(query , data , options))
