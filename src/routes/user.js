@@ -57,11 +57,36 @@ router.delete("/user", async (req, res) => {
   }
 });
 
-router.patch("/user", async (req, res) => {
+router.patch("/user/:id", async (req, res) => {
   try {
-    const userId = req.body._id;
+    const userId = req.params.id;
 
     const data = req.body;
+
+    const ALLOWED_UPDATE = [
+      "firstName",
+      "lastName",
+      "age",
+      "about",
+      "gender",
+      "skills",
+    ];
+
+    const isUpdatedAllowed = Object.keys(data).every((item) =>
+      ALLOWED_UPDATE.includes(item),
+    );
+
+    const element = Object.keys(data).find(
+      (item) => !ALLOWED_UPDATE.includes(item),
+    );
+
+    if (!isUpdatedAllowed && element.length > 0) {
+      throw new Error(element.split(" ") + " " + "Update is not allowed");
+    }
+
+    if (data.skills.length > 10) {
+      throw new Error("Skills are not allowed more than 10");
+    }
 
     const updatedDocument = await User.findByIdAndUpdate(userId, data, {
       new: true,

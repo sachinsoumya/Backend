@@ -35,4 +35,7 @@
 - Add required , unique , maxLength , minLength , lowerCase , upperCase , max , min , trim , default
 - Add custom validator function for gender field.
 - Improve the DB Schema.
+- Added api level validation on PATCH request  and POST signup request.
+- Data Sanitization - Added api validation for each field.
+
 
