@@ -37,5 +37,7 @@
 - Improve the DB Schema.
 - Added api level validation on PATCH request  and POST signup request.
 - Data Sanitization - Added api validation for each field.
+- Installed validator.
+- Explore validator library function and use validate functions for password , email .
 
 
