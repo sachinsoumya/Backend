@@ -31,8 +31,16 @@ app.post("/signup", async (req, res) => {
 
     validateData(req.body);
 
-    const { firstName, lastName, emailId, password, gender, age, about , skills } =
-      req.body;
+    const {
+      firstName,
+      lastName,
+      emailId,
+      password,
+      gender,
+      age,
+      about,
+      skills,
+    } = req.body;
 
     //* encrypt the password
 
@@ -84,6 +92,30 @@ app.post("/signup", async (req, res) => {
     res.send("User added successfully");
   } catch (err) {
     res.send("Error in saving user" + " " + err.message);
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { emailId, password } = req.body;
+
+  try {
+    const user = await User.findOne({ emailId: emailId });
+
+    if (!user) {
+      throw new Error("Invalid Credentials");
+    }
+
+    //* Compare the password
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordMatch) {
+      throw new Error("Invalid Credentials");
+    }
+
+    res.send("User logged in successfully");
+  } catch (err) {
+    res.send("Error in login" + " " + err.message);
   }
 });
 

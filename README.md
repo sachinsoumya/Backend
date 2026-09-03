@@ -42,6 +42,8 @@
 - Validate the signup data by helper function.
 - Install bcrypt.js
 - Create passwordHash by using bcrypt.hash(req.body.password , slatRounds) and save the user in db.
+- Create /login api
+- Compare passwords and throw new errors if emailId and password is invalid.
 
 
 
