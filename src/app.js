@@ -12,6 +12,9 @@ const User = require("./model/user");
 
 const userRouter = require("./routes/user");
 
+const { validateData } = require("./utils/validate");
+
+const bcrypt = require("bcryptjs");
 
 // const User2 = require("./model/user2");
 
@@ -20,10 +23,38 @@ console.log(connectDb);
 app.use(express.json());
 // app.use("/", authRouter);
 
-app.use("/" , userRouter);
+app.use("/", userRouter);
 
 app.post("/signup", async (req, res) => {
   try {
+    //* Validate the data
+
+    validateData(req.body);
+
+    const { firstName, lastName, emailId, password, gender, age, about , skills } =
+      req.body;
+
+    //* encrypt the password
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    console.log(hashedPassword);
+
+    //* save the data in database
+
+    const user = new User({
+      firstName,
+      lastName,
+      emailId,
+      password: hashedPassword,
+      gender,
+      age,
+      about,
+      skills,
+    });
+
+    await user.save();
+
     // const user = new User({
     //   firstName: "Jane",
     //   lastName: "Doeh",
@@ -33,9 +64,9 @@ app.post("/signup", async (req, res) => {
     //   gender: "female",
     // });
 
-    const user = new User(req.body);
+    // const user = new User(req.body);
 
-    console.log(req.body);
+    // console.log(req.body);
 
     // const user2 = new User2({
     //   firstName: "Sam",
@@ -46,9 +77,8 @@ app.post("/signup", async (req, res) => {
     //   gender: "Male",
     // });
 
-    await user.save();
+    // await user.save();
     // await user2.save();
-    
 
     // console.log(user);
     res.send("User added successfully");

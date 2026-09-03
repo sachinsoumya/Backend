@@ -59,6 +59,11 @@ const userSchema = new mongoose.Schema(
     },
     skills: {
       type: [String],
+      validator(value) {
+        if (value.length > 10 && value.length < 1) {
+          throw new Error("Skills should be between 1 to 10");
+        }
+      },
     },
   },
   {

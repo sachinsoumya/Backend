@@ -39,5 +39,10 @@
 - Data Sanitization - Added api validation for each field.
 - Installed validator.
 - Explore validator library function and use validate functions for password , email .
+- Validate the signup data by helper function.
+- Install bcrypt.js
+- Create passwordHash by using bcrypt.hash(req.body.password , slatRounds) and save the user in db.
+
+
 
 
