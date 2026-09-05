@@ -16,6 +16,12 @@ const { validateData } = require("./utils/validate");
 
 const bcrypt = require("bcryptjs");
 
+const cookieParser = require("cookie-parser");
+
+const jwt = require("jsonwebtoken");
+
+app.use(cookieParser());
+
 // const User2 = require("./model/user2");
 
 console.log(connectDb);
@@ -24,6 +30,38 @@ app.use(express.json());
 // app.use("/", authRouter);
 
 app.use("/", userRouter);
+
+app.get("/profile", async (req, res) => {
+  try {
+    const cookies = req.cookies;
+
+    const { token } = cookies;
+    if (!token) {
+      throw new Error(" Please login first ");
+    }
+    console.log(token);
+
+    const decodedMessage = await jwt.verify(token, "app@#369");
+
+    console.log(decodedMessage);
+
+    const { id } = decodedMessage;
+
+    console.log("Logged in user id is " + id);
+
+    const user = await User.findOne({ _id: id });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    console.log(user);
+
+    res.send(user);
+  } catch (err) {
+    res.status(401).send("Error in profile page" + " " + err.message);
+  }
+});
 
 app.post("/signup", async (req, res) => {
   try {
@@ -112,6 +150,12 @@ app.post("/login", async (req, res) => {
     if (!isPasswordMatch) {
       throw new Error("Invalid Credentials");
     }
+
+    const token = await jwt.sign({ id: user._id }, "app@#369");
+
+    console.log(token);
+
+    res.cookie("token", token);
 
     res.send("User logged in successfully");
   } catch (err) {

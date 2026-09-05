@@ -44,6 +44,12 @@
 - Create passwordHash by using bcrypt.hash(req.body.password , slatRounds) and save the user in db.
 - Create /login api
 - Compare passwords and throw new errors if emailId and password is invalid.
+- Installed cookie-parser
+- Just send dummy cookie to the user
+- Check the /profile route to check if we get the cookie back.
+- Installed jsonwebtoken 
+- In /login api , after email and password validation , create a jwt token and set it to the cookies.
+- In /profile api , read the cookies , verify the token and find the loggedIn user.
 
 
 
