@@ -35,7 +35,7 @@
 - Add required , unique , maxLength , minLength , lowerCase , upperCase , max , min , trim , default
 - Add custom validator function for gender field.
 - Improve the DB Schema.
-- Added api level validation on PATCH request  and POST signup request.
+- Added api level validation on PATCH request and POST signup request.
 - Data Sanitization - Added api validation for each field.
 - Installed validator.
 - Explore validator library function and use validate functions for password , email .
@@ -47,10 +47,9 @@
 - Installed cookie-parser
 - Just send dummy cookie to the user
 - Check the /profile route to check if we get the cookie back.
-- Installed jsonwebtoken 
+- Installed jsonwebtoken
 - In /login api , after email and password validation , create a jwt token and set it to the cookies.
 - In /profile api , read the cookies , verify the token and find the loggedIn user.
-
-
-
-
+- userAuth middleware
+- Write userAuth middleware in profile api and sendConnection request api.
+- Set token expires and cookies expires to some period.

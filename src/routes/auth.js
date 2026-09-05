@@ -4,7 +4,7 @@ const router = express.Router();
 
 const { adminAuth, userAuth } = require("../middlewares/auth");
 
-router.use("/admin", adminAuth);
+// router.use("/admin", adminAuth);
 
 router.get("/getUserData", (req, res) => {
   try {
