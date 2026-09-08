@@ -53,3 +53,5 @@
 - userAuth middleware
 - Write userAuth middleware in profile api and sendConnection request api.
 - Set token expires and cookies expires to some period.
+- Create userSchema method to get JWT.
+- Create userSchema methods to compare password by bcrypt.compare(passwordInput , passwordHash)

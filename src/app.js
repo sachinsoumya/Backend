@@ -43,6 +43,20 @@ app.get("/profile", userAuth, async (req, res) => {
   }
 });
 
+app.post("/sendConRequest", userAuth, async (req, res) => {
+  try {
+    const user = req.user;
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    res.send("Connection request sent by" + " "+user.firstName);
+  } catch (error) {
+    res.status(401).send("Error in sending connection request" + " " + error.message);
+  }
+});
+
 app.post("/signup", async (req, res) => {
   try {
     //* Validate the data
@@ -125,15 +139,13 @@ app.post("/login", async (req, res) => {
 
     //* Compare the password
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = await user.validatePassword(password);
 
     if (!isPasswordMatch) {
       throw new Error("Invalid Credentials");
     }
 
-    const token = await jwt.sign({ id: user._id }, "app@#369", {
-      expiresIn: "1d",
-    });
+    const token = await user.getJWTToken();
 
     console.log(token);
 
