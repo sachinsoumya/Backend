@@ -56,7 +56,8 @@
 - Create userSchema method to get JWT.
 - Create userSchema methods to compare password by bcrypt.compare(passwordInput , passwordHash)
 
--Group multiple routes under respective routers.
--Create routes folder for managing auth , profile and connection routers.
--import these routers to the app.js file.
--Create list of all apis that can be possible in this application.
+- Group multiple routes under respective routers.
+- Create routes folder for managing auth , profile and connection routers.
+- import these routers to the app.js file.
+- Create list of all apis that can be possible in this application.
+- Create POST  /logout  API

@@ -112,6 +112,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/logout", async (req, res) => {
+  try {
+    // res.cookie("token", null , {
+    //   expires: new Date(Date.now()),
+    // });
+    res.clearCookie("token");
+    res.send("User logged out successfully");
+  } catch (err) {
+    res.status(401).send("Error in logout" + " " + err.message);
+  }
+});
+
 // router.use("/admin", adminAuth);
 
 module.exports = router;
