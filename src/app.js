@@ -10,7 +10,9 @@ const connectDb = require("./config/database");
 
 const User = require("./model/user");
 
-const userRouter = require("./routes/user");
+const profileRouter = require("./routes/profile");
+
+const connectionRouter = require("./routes/connection");
 
 const { validateData } = require("./utils/validate");
 
@@ -27,21 +29,11 @@ app.use(cookieParser());
 console.log(connectDb);
 
 app.use(express.json());
-// app.use("/", authRouter);
+app.use("/", authRouter);
 
-app.use("/", userRouter);
+app.use("/", profileRouter);
 
-app.get("/profile", userAuth, async (req, res) => {
-  try {
-    const user = req.user;
-
-    console.log(user);
-
-    res.send(user);
-  } catch (err) {
-    res.status(401).send("Error in profile page" + " " + err.message);
-  }
-});
+app.use("/", connectionRouter);
 
 app.post("/sendConRequest", userAuth, async (req, res) => {
   try {
@@ -51,109 +43,11 @@ app.post("/sendConRequest", userAuth, async (req, res) => {
       throw new Error("User not found");
     }
 
-    res.send("Connection request sent by" + " "+user.firstName);
+    res.send("Connection request sent by" + " " + user.firstName);
   } catch (error) {
-    res.status(401).send("Error in sending connection request" + " " + error.message);
-  }
-});
-
-app.post("/signup", async (req, res) => {
-  try {
-    //* Validate the data
-
-    validateData(req.body);
-
-    const {
-      firstName,
-      lastName,
-      emailId,
-      password,
-      gender,
-      age,
-      about,
-      skills,
-    } = req.body;
-
-    //* encrypt the password
-
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-    console.log(hashedPassword);
-
-    //* save the data in database
-
-    const user = new User({
-      firstName,
-      lastName,
-      emailId,
-      password: hashedPassword,
-      gender,
-      age,
-      about,
-      skills,
-    });
-
-    await user.save();
-
-    // const user = new User({
-    //   firstName: "Jane",
-    //   lastName: "Doeh",
-    //   email: "jane@gmail.com",
-    //   password: 1234567,
-    //   age: 76,
-    //   gender: "female",
-    // });
-
-    // const user = new User(req.body);
-
-    // console.log(req.body);
-
-    // const user2 = new User2({
-    //   firstName: "Sam",
-    //   lastName: "Burgman",
-    //   age: 99,
-    //   emailId: "sam@gmail.com",
-    //   address: "London",
-    //   gender: "Male",
-    // });
-
-    // await user.save();
-    // await user2.save();
-
-    // console.log(user);
-    res.send("User added successfully");
-  } catch (err) {
-    res.send("Error in saving user" + " " + err.message);
-  }
-});
-
-app.post("/login", async (req, res) => {
-  const { emailId, password } = req.body;
-
-  try {
-    const user = await User.findOne({ emailId: emailId });
-
-    if (!user) {
-      throw new Error("Invalid Credentials");
-    }
-
-    //* Compare the password
-
-    const isPasswordMatch = await user.validatePassword(password);
-
-    if (!isPasswordMatch) {
-      throw new Error("Invalid Credentials");
-    }
-
-    const token = await user.getJWTToken();
-
-    console.log(token);
-
-    res.cookie("token", token, { expires: new Date(Date.now() + 8 * 3600000) });
-
-    res.send("User logged in successfully");
-  } catch (err) {
-    res.send("Error in login" + " " + err.message);
+    res
+      .status(401)
+      .send("Error in sending connection request" + " " + error.message);
   }
 });
 

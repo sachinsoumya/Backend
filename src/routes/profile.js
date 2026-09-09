@@ -4,13 +4,19 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/users", async (req, res) => {
+const { userAuth } = require("../middlewares/auth");
+
+router.get("/profile", userAuth, async (req, res) => {
   try {
-    const users = await User.find();
+    const user = req.user;
 
-    console.log(users);
+    if (!user) {
+      throw new Error("User not found");
+    }
 
-    res.send(users);
+    console.log(user);
+
+    res.send(user);
   } catch (err) {
     res.send("Error in getting user" + " " + err.message);
   }
@@ -57,9 +63,13 @@ router.delete("/user", async (req, res) => {
   }
 });
 
-router.patch("/user/:id", async (req, res) => {
+router.patch("/profile/edit", userAuth, async (req, res) => {
   try {
-    const userId = req.params.id;
+    const user = req.user;
+    if(!user){
+      throw new Error("User not found");
+    }
+    const userId =  user._id;
 
     const data = req.body;
 
@@ -80,11 +90,13 @@ router.patch("/user/:id", async (req, res) => {
       (item) => !ALLOWED_UPDATE.includes(item),
     );
 
-    if (!isUpdatedAllowed && element.length > 0) {
+    console.log()
+
+    if (!isUpdatedAllowed && element) {
       throw new Error(element.split(" ") + " " + "Update is not allowed");
     }
 
-    if (data.skills.length > 10) {
+    if (data ?.skills ?.length > 10) {
       throw new Error("Skills are not allowed more than 10");
     }
 
