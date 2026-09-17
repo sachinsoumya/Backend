@@ -61,3 +61,7 @@
 - import these routers to the app.js file.
 - Create list of all apis that can be possible in this application.
 - Create POST  /logout  API
+
+- Created schema and model for connectionRequest(connectionRequestSchema and ConnectionRequestModel ) ;
+- Created POST /request/send/:status/:toUserId API in connection router file for sending connection request.
+- Saving the connection data to database.
