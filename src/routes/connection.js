@@ -4,6 +4,10 @@ const router = express.Router();
 
 const { userAuth } = require("../middlewares/auth");
 
+const ConnectionRequest = require("../model/connectionRequest");
+
+const User = require("../model/user");
+
 router.post("/sendConnectionRequest", userAuth, (req, res) => {
   try {
     const user = req.user;
@@ -30,7 +34,54 @@ router.post("/request/send/:status/:toUserId", userAuth, async (req, res) => {
 
     const status = req.params.status;
 
-    const connectionRequest = new ConnectionRequestModel({
+    
+
+    const allowedStatus = ["interested", "ignored"];
+
+    const isValidStatus = allowedStatus.includes(status);
+
+    if (!isValidStatus) {
+      return res.status(400).json({
+        message: "Invalid status type",
+      });
+    }
+
+    const isValid_toUserId = await User.findById(toUserId);
+
+    if (!isValid_toUserId) {
+      return res.status(404).json({
+        message: "Invalid toUserId, user does not exist",
+      });
+    }
+
+    //* If  there is an existing connectionRequest between the two users, then we will not allow to send another connection request.
+
+    const existingConnectionRequest = await ConnectionRequest.findOne({
+      $or: [
+        {
+          fromUserId,
+          toUserId,
+        },
+        {
+          fromUserId: toUserId,
+          toUserId: fromUserId,
+        },
+      ],
+    });
+
+    if (existingConnectionRequest) {
+      return res.status(400).json({
+        message: "Connection  request already exists between the two users",
+      });
+    }
+
+
+
+
+
+
+
+    const connectionRequest = new ConnectionRequest({
       fromUserId,
       toUserId,
       status,

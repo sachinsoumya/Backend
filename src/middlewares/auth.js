@@ -7,7 +7,7 @@ const User = require("../model/user");
 //     const token = "xyzqwcj2be2ibcf12in3co1i";
 
 //     const authenticatedUser = token === "xyz";
-//     if (!authenticatedUser) {
+//     if (!authenticatedUser) {  
 //       res.status(401).send("Unauthorized");
 //     } else {
 //       next();

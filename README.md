@@ -64,4 +64,11 @@
 
 - Created schema and model for connectionRequest(connectionRequestSchema and ConnectionRequestModel ) ;
 - Created POST /request/send/:status/:toUserId API in connection router file for sending connection request.
+- Proper validation of data.
+- Think about all corner cases.
 - Saving the connection data to database.
+- $or and $and query in mongoose.
+- Schema.pre("save" , function(){ })
+- MongoDB indexes.
+- Why we need index in mongodb
+- what is the advantages and disadvantages of creating indexes.
