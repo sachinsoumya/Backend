@@ -74,3 +74,4 @@
 - what is the advantages and disadvantages of creating indexes.
 
 - Wrote code with proper validation for POST API - /request/review/:status/:requestId
+- Used ref and populate in GET API-  /user/requests 
