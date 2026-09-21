@@ -62,6 +62,13 @@ router.get("/user/connections", userAuth, async (req, res) => {
 
 router.get("/user/feed", userAuth, async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+
+    limit = limit > 50 ? 50 : limit;
+
+    const skip = (page - 1) * limit;
+
     const loggedInUser = req.user;
 
     const connectionRequests = await ConnectionRequests.find({
@@ -80,9 +87,19 @@ router.get("/user/feed", userAuth, async (req, res) => {
       _id: {
         $nin: [...connections, loggedInUser._id.toString()],
       },
-    }).select(" firstName lastName gender about age skills");
+    })
+      .select(" firstName lastName gender about age skills")
+      .skip(skip)
+      .limit(limit);
 
     console.log(feedData);
+
+    if (feedData.length == 0) {
+      return res.json({
+        message: "No feed found ",
+        data:null
+      });
+    }
 
     // console.log(connections);
 
