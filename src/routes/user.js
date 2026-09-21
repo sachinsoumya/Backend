@@ -8,6 +8,8 @@ const ConnectionRequests = require("../model/connectionRequest");
 
 const SELECTED_FIELDS = ["firstName", "lastName", "age", "gender"];
 
+const User = require("../model/user");
+
 router.get("/user/requests", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
@@ -55,6 +57,41 @@ router.get("/user/connections", userAuth, async (req, res) => {
     });
   } catch (error) {
     res.status(400).send("Error" + " " + error.message);
+  }
+});
+
+router.get("/user/feed", userAuth, async (req, res) => {
+  try {
+    const loggedInUser = req.user;
+
+    const connectionRequests = await ConnectionRequests.find({
+      $or: [{ toUserId: loggedInUser._id }, { fromUserId: loggedInUser._id }],
+    });
+
+    const connections = connectionRequests.map((item) => {
+      if (item.toUserId.toString() === loggedInUser._id.toString()) {
+        return item.fromUserId.toString();
+      }
+
+      return item.toUserId.toString();
+    });
+
+    const feedData = await User.find({
+      _id: {
+        $nin: [...connections, loggedInUser._id.toString()],
+      },
+    }).select(" firstName lastName gender about age skills");
+
+    console.log(feedData);
+
+    // console.log(connections);
+
+    res.json({
+      message: loggedInUser.firstName + " " + "feed",
+      data: feedData,
+    });
+  } catch (err) {
+    res.status(400).send("ERROR" + " " + err.message);
   }
 });
 

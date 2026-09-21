@@ -75,3 +75,4 @@
 
 - Wrote code with proper validation for POST API - /request/review/:status/:requestId
 - Used ref and populate in GET API-  /user/requests 
+- Created feed api - GET /user/feed 
